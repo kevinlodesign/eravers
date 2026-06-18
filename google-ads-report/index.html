@@ -8,12 +8,12 @@
   :root{
     --bg:#f4f5f7; --card:#ffffff; --ink:#1f2329; --muted:#8a909a;
     --line:#e7e9ee; --red:#b00020; --redbg:#fdecee; --amber:#b8860b;
-    --amberbg:#fdf6e3; --green:#1a7a3a; --greenbg:#eaf6ee;
+    --amberbg:#fdf6e3; --green:#1a7a3a; --greenbg:#eaf6ee; --hl:#eef3ff;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
     background:var(--bg);color:var(--ink);line-height:1.6;padding:32px 16px}
-  .wrap{max-width:760px;margin:0 auto}
+  .wrap{max-width:780px;margin:0 auto}
   header{margin-bottom:22px}
   h1{font-size:21px;font-weight:700;letter-spacing:.3px}
   .meta{color:var(--muted);font-size:13px;margin-top:6px}
@@ -28,11 +28,17 @@
   .tag.green{background:var(--greenbg);color:var(--green)}
   .cname{font-size:15px;font-weight:700;margin-bottom:4px}
   .desc{font-size:13.5px;color:#3c4250;margin:6px 0}
-  table{width:100%;border-collapse:collapse;margin:12px 0 4px;font-size:13px}
-  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
-  th{background:#fafbfc;color:var(--muted);font-weight:600}
+  table{width:100%;border-collapse:collapse;margin:12px 0 4px}
+  th,td{text-align:right;padding:9px 12px;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  th{background:#fafbfc;color:var(--muted);font-weight:600;font-size:12.5px}
+  th.hl{color:var(--ink)}
+  td.lbl{font-size:13.5px;color:#3c4250;font-weight:600}
+  td.num{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1;color:#3c4250}
+  td.cur,th.cur{background:var(--hl)}
+  td.cur{color:var(--ink)}
+  td.zero{color:var(--red)}
   tr:last-child td{border-bottom:none}
-  .num{font-variant-numeric:tabular-nums}
   .note{font-size:13px;color:#3c4250;margin-top:8px}
   .note b{color:var(--ink)}
   .summary{background:#1f2329;color:#fff;border-radius:12px;padding:20px 24px;margin-top:18px}
@@ -55,14 +61,15 @@
   <div class="card">
     <span class="tag red">🔴 高優先警示</span>
     <div class="cname">茅舍屋私廚：大姊 牛肉麵</div>
-    <div class="desc">昨日轉換歸零，但近 7 日日均約 2.9 筆且穩定有量；全帳戶昨日總轉換亦為 0，須優先排查。</div>
+    <div class="desc">昨日轉換歸零，前一日仍有 1 筆、近 7 日日均約 2.9 筆；全帳戶昨日總轉換亦為 0，須優先排查。</div>
     <table>
-      <thead><tr><th>指標</th><th>昨日</th><th>近 7 日日均基準</th></tr></thead>
+      <thead><tr><th>指標</th><th>前一日 06/16</th><th class="hl cur">昨日 06/17</th><th>近 7 日日均</th></tr></thead>
       <tbody>
-        <tr><td>轉換</td><td class="num" style="color:var(--red);font-weight:700">0</td><td class="num">2.9</td></tr>
-        <tr><td>花費</td><td class="num">NT$60</td><td class="num">NT$76（-20%，正常範圍）</td></tr>
-        <tr><td>曝光 / 點擊</td><td class="num">1,811 / 24</td><td>正常</td></tr>
-        <tr><td>CTR</td><td class="num">1.33%</td><td class="num">約 1.98%</td></tr>
+        <tr><td class="lbl">轉換</td><td class="num">1</td><td class="num cur zero">0</td><td class="num">2.9</td></tr>
+        <tr><td class="lbl">花費</td><td class="num">NT$50</td><td class="num cur">NT$60</td><td class="num">NT$76</td></tr>
+        <tr><td class="lbl">曝光</td><td class="num">1,406</td><td class="num cur">1,811</td><td class="num">1,386</td></tr>
+        <tr><td class="lbl">點擊</td><td class="num">26</td><td class="num cur">24</td><td class="num">27</td></tr>
+        <tr><td class="lbl">CTR</td><td class="num">1.85%</td><td class="num cur">1.33%</td><td class="num">1.98%</td></tr>
       </tbody>
     </table>
     <div class="note"><b>可能原因：</b>花費與點擊都正常、僅轉換掉到 0，最可能是「轉換追蹤失效」（GA4／轉換代碼未回傳）或到達頁、訂位／menu 連結異常，其次才是當日單純無人下訂。</div>
@@ -72,13 +79,33 @@
   <div class="card">
     <span class="tag amber">🟡 留意</span>
     <div class="cname">茅舍屋｜品牌招牌菜</div>
-    <div class="desc">昨日花費 NT$39、曝光 50、轉換 0，且近 7 日數據量極小（疑似新上線或剛啟用），故花費對「日均」呈現暴增屬假性異常。先觀察即可，無需動作。</div>
+    <div class="desc">昨日花費 NT$39、曝光 50、轉換 0；近 7 日數據量極小（疑似新上線或剛啟用），花費對「日均」呈現暴增屬假性異常。先觀察即可，無需動作。</div>
+    <table>
+      <thead><tr><th>指標</th><th>前一日 06/16</th><th class="hl cur">昨日 06/17</th><th>近 7 日日均</th></tr></thead>
+      <tbody>
+        <tr><td class="lbl">轉換</td><td class="num">0</td><td class="num cur">0</td><td class="num">0</td></tr>
+        <tr><td class="lbl">花費</td><td class="num">NT$39</td><td class="num cur">NT$39</td><td class="num">NT$6</td></tr>
+        <tr><td class="lbl">曝光</td><td class="num">35</td><td class="num cur">50</td><td class="num">5</td></tr>
+        <tr><td class="lbl">點擊</td><td class="num">7</td><td class="num cur">7</td><td class="num">1</td></tr>
+        <tr><td class="lbl">CTR</td><td class="num">20%</td><td class="num cur">14%</td><td class="num">20%</td></tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="card">
     <span class="tag green">✅ 正常</span>
     <div class="cname">大姊 牛肉麵 三嬸婆 麻油雞 福伯豬腳 新店美食</div>
-    <div class="desc">昨日花費 NT$40（日均 NT$37）、曝光 989、轉換 0；近 7 日日均轉換 1.9，未達警示門檻（但已接近，併同上方追蹤問題一起觀察），狀態 enabled。</div>
+    <div class="desc">昨日花費 NT$40（日均 NT$37）、曝光 989；昨日轉換 0、前一日有 1 筆，近 7 日日均 1.9 未達警示門檻（但已接近，併同上方追蹤問題一起觀察），狀態 enabled。</div>
+    <table>
+      <thead><tr><th>指標</th><th>前一日 06/16</th><th class="hl cur">昨日 06/17</th><th>近 7 日日均</th></tr></thead>
+      <tbody>
+        <tr><td class="lbl">轉換</td><td class="num">1</td><td class="num cur">0</td><td class="num">1.9</td></tr>
+        <tr><td class="lbl">花費</td><td class="num">NT$32</td><td class="num cur">NT$40</td><td class="num">NT$37</td></tr>
+        <tr><td class="lbl">曝光</td><td class="num">1,062</td><td class="num cur">989</td><td class="num">1,024</td></tr>
+        <tr><td class="lbl">點擊</td><td class="num">23</td><td class="num cur">32</td><td class="num">23</td></tr>
+        <tr><td class="lbl">CTR</td><td class="num">2.17%</td><td class="num cur">3.24%</td><td class="num">2.29%</td></tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="summary">
